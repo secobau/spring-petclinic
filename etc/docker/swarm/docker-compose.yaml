@@ -4,13 +4,6 @@
 #########################################################################
 services:
   web:
-    deploy:
-      placement:
-        constraints:
-        - node.role == manager
-      replicas: 1
-      restart_policy:
-        condition: any
     image: secobau/spring-petclinic:0.4
     ports:
       - 8080:8080
