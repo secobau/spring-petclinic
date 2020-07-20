@@ -4,6 +4,10 @@
 #########################################################################
 services:
   web:
+    deploy:
+      placement:
+        constraints:
+        - node.role == worker
     image: secobau/spring-petclinic:0.4
     ports:
       - 8080:8080
