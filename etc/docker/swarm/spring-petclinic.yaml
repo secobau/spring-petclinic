@@ -8,7 +8,7 @@ services:
       placement:
         constraints:
         - node.role == worker
-    image: secobau/spring-petclinic:0.4
+    image: secobau/spring-petclinic
     ports:
       - 8080:8080
 version: '3.8'
