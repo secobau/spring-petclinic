@@ -5,20 +5,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-petclinic
+  name: spring-petclinic-deploy
 spec:
   selector:
     matchLabels:
-      service: spring-petclinic
+      mylabel: spring-petclinic-po
   template:
     metadata:
       labels:
-        service: spring-petclinic
+        mylabel: spring-petclinic-po
     spec:
       containers:
       -
-        image: secobau/spring-petclinic
-        name: spring-petclinic
+        image: secobau/spring-petclinic:0.6
+        name: spring-petclinic-container
 ---
 apiVersion: v1
 kind: Service
@@ -29,12 +29,12 @@ spec:
   -
     port: 8080
   selector:
-    service: spring-petclinic
+    mylabel: spring-petclinic-po
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: spring-petclinic
+  name: spring-petclinic-route
 spec:
   to:
     kind: Service
