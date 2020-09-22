@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       -
-        image: secobau/spring-petclinic
+        image: secobau/spring-petclinic:0.7
         name: spring-petclinic-container
         ports:
           -
