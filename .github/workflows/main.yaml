@@ -15,13 +15,14 @@ jobs:
         echo Add other actions to build,
         echo test, and deploy your project.
         set -x
-        compose=etc/docker/swarm/docker-compose.yaml
+        project=spring-petclinic
+        compose=etc/docker/swarm/$project.yaml
         date=$( date +%s )
         script=.github/bin/check-service.sh
         sed -i s/worker/manager/ ${compose}
         sed -i s/secobau/${date}/ ${compose}
         docker swarm init
-        docker build -t ${date}/spring-petclinic --no-cache .
-        docker stack deploy -c ${compose} petclinic
+        docker build -t ${date}/$project --no-cache .
+        docker stack deploy -c ${compose} $project
         chmod +x ${script}
         ./${script}
