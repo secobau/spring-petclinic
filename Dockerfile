@@ -1,4 +1,4 @@
-FROM alpine/git AS clone
+FROM alpine/git:latest AS clone
 WORKDIR /app1
 RUN git clone https://github.com/secobau/spring-petclinic.git 
 
