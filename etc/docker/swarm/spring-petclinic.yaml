@@ -3,7 +3,7 @@
 #      SPDX-License-Identifier:  GPL-2.0-only                           #
 #########################################################################
 services:
-  web:
+  spring-petclinic-svc:
     deploy:
       placement:
         constraints:
