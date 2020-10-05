@@ -1,11 +1,11 @@
-name: CI-swarm
-on:
-  push: 
+name: CI-minikube
+on: 
+  push:
     branches: [main]
-jobs: 
-  swarm: 
+jobs:
+  minikube:
     env:
-      mode: swarm
+      mode: minikube
     runs-on: ubuntu-latest
     steps:
     -
@@ -15,22 +15,24 @@ jobs:
 
         set -x
 
+        curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+        sudo dpkg -i minikube_latest_amd64.deb
+
         project=$(basename $GITHUB_REPOSITORY)
 
         compose=etc/docker/$mode/$project.yaml
-
         date=$(date +%s)
 
         sed -i s/latest/$mode-$date/ $compose
         docker build -t $GITHUB_REPOSITORY:$mode-$date --no-cache .
 
-        docker swarm init
-        sed -i s/worker/manager/ $compose
-        docker stack deploy -c $compose $project
+        free -h
+        minikube start && minikube kubectl -- apply -f $compose
+        free -h
 
         while true
           do
             sleep 1
-            docker service ls
-            docker service ls | grep '\([0-9]\)/\1' && break
+            minikube kubectl -- get deploy
+            minikube kubectl -- get deploy | grep '\([0-9]\)/\1' && break
           done
