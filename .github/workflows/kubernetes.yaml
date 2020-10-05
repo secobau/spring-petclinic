@@ -21,15 +21,18 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y kubelet kubeadm kubectl
         cat /etc/hosts
-        sudo sed -i /127.0.0.1/s/$/' 'k8smaster/ /etc/hosts
-        sudo kubeadm init --control-plane-endpoint=k8smaster --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=all
-        mkdir -p $HOME/.kube
-        sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
-        sudo chown $(id -u):$(id -g) $HOME/.kube/config
-        kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
-        echo "source <(kubectl completion bash)" >> ~/.bashrc
-        kubectl taint node ideapad node-role.kubernetes.io/master:NoSchedule-
-
+        ip r
+        ip a
+        cat /etc/hosts
+#        sudo sed -i /127.0.0.1/s/$/' 'k8smaster/ /etc/hosts
+#        sudo kubeadm init --control-plane-endpoint=k8smaster --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=all
+#        mkdir -p $HOME/.kube
+#        sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+#        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+#        kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+#        echo "source <(kubectl completion bash)" >> ~/.bashrc
+#        kubectl taint node ideapad node-role.kubernetes.io/master:NoSchedule-
+#
 #        project=$(basename $GITHUB_REPOSITORY)
 #
 #        compose=etc/docker/$mode/$project.yaml
