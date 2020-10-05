@@ -21,7 +21,6 @@ jobs:
         sudo apt-get install -y kubelet kubeadm kubectl
 
         ip=10.1.0.4
-        echo 127.0.0.1 localhost | sudo tee /etc/hosts
         echo $ip k8smaster | sudo tee -a /etc/hosts
 
         sudo kubeadm init --control-plane-endpoint=k8smaster --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=all
