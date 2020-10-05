@@ -15,9 +15,9 @@ jobs:
         compose=etc/docker/swarm/$project.yaml
         date=$(date +%s)
         sed -i s/worker/manager/ $compose
-        sed -i s/secobau/$date/ $compose
+        sed -i s/latest/$mode-$date/ $compose
+        docker build -t $GITHUB_REPOSITORY:$mode-$date --no-cache .
         docker swarm init
-        docker build -t $date/$project --no-cache .
         docker stack deploy -c $compose $project
         while true
           do
