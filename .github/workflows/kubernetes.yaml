@@ -1,0 +1,50 @@
+name: CI-kubernetes
+on: 
+  push:
+    branches: [main]
+jobs:
+  kubernetes:
+    env:
+      mode: kubernetes
+    runs-on: ubuntu-latest
+    steps:
+    -
+      uses: actions/checkout@v2
+    -
+      run: |
+
+        set -x
+
+        apt-get update && apt-get install -y apt-transport-https curl
+        echo deb http://apt.kubernetes.io/ kubernetes-xenial main | tee -a /etc/apt/sources.list.d/kubernetes.list
+        curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+        apt-get update
+        apt-get install -y kubelet kubeadm kubectl
+        cat /etc/hosts
+        sed -i /127.0.0.1/s/$/' 'k8smaster/ /etc/hosts
+        kubeadm init --control-plane-endpoint=k8smaster --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=all
+        mkdir -p $HOME/.kube
+        cp /etc/kubernetes/admin.conf $HOME/.kube/config
+        chown $(id -u):$(id -g) $HOME/.kube/config
+        kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+        echo "source <(kubectl completion bash)" >> ~/.bashrc
+        kubectl taint node ideapad node-role.kubernetes.io/master:NoSchedule-
+
+#        project=$(basename $GITHUB_REPOSITORY)
+#
+#        compose=etc/docker/$mode/$project.yaml
+#        date=$(date +%s)
+#
+#        sed -i s/latest/$mode-$date/ $compose
+#        docker build -t $GITHUB_REPOSITORY:$mode-$date --no-cache .
+#
+#        free -h
+#        minikube start && minikube kubectl -- apply -f $compose
+#        free -h
+#
+#        while true
+#          do
+#            sleep 1
+#            minikube kubectl -- get deploy
+#            minikube kubectl -- get deploy | grep '\([0-9]\)/\1' && break
+#          done
