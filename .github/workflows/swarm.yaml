@@ -1,0 +1,31 @@
+name: CI-swarm
+on:
+  push: 
+    branches: [main]
+jobs: 
+  swarm: 
+    runs-on: ubuntu-latest
+    steps:
+    -
+      uses: actions/checkout@v2
+    -
+      run: |
+        set -x
+        project=spring-petclinic
+        compose=etc/docker/swarm/$project.yaml
+        date=$(date +%s)
+        sed -i s/worker/manager/ $compose
+        sed -i s/secobau/$date/ $compose
+        docker swarm init
+        docker build -t $date/$project --no-cache .
+        docker stack deploy -c $compose $project
+        while true
+          do
+            sleep 1
+            docker service ls
+            docker service ls | grep '\([0-9]\)/\1' && break
+          done
+            
+        
+        
+        

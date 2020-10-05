@@ -1,4 +1,7 @@
-# Spring PetClinic Sample Application ![CI](https://github.com/secobau/spring-petclinic/workflows/CI/badge.svg)
+![CI](https://github.com/secobau/spring-petclinic/workflows/CI/badge.svg)
+![CI-swarm](https://github.com/secobau/spring-petclinic/workflows/CI-swarm/badge.svg)
+
+# Spring PetClinic Sample Application 
 Deploy this sample application to Pivotal Web Services:
 
 
