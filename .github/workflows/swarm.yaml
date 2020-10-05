@@ -4,6 +4,8 @@ on:
     branches: [main]
 jobs: 
   swarm: 
+    env:
+      mode: swarm
     runs-on: ubuntu-latest
     steps:
     -
@@ -11,8 +13,8 @@ jobs:
     -
       run: |
         set -x
-        project=spring-petclinic
-        compose=etc/docker/swarm/$project.yaml
+        project=$(basename $GITHUB_REPOSITORY)
+        compose=etc/docker/$mode/$project.yaml
         date=$(date +%s)
         sed -i s/worker/manager/ $compose
         sed -i s/latest/$mode-$date/ $compose
