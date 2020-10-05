@@ -1,5 +1,6 @@
 ![CI](https://github.com/secobau/spring-petclinic/workflows/CI/badge.svg)
 ![CI-swarm](https://github.com/secobau/spring-petclinic/workflows/CI-swarm/badge.svg)
+![CI-minikube](https://github.com/secobau/spring-petclinic/workflows/CI-minikube/badge.svg)
 
 # Spring PetClinic Sample Application 
 Deploy this sample application to Pivotal Web Services:
