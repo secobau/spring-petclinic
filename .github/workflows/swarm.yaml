@@ -25,7 +25,3 @@ jobs:
             docker service ls
             docker service ls | grep '\([0-9]\)/\1' && break
           done
-            
-        
-        
-        
