@@ -1,7 +1,6 @@
-ARG image=alpine/git
-ARG release=latest
 
 FROM $image:$release AS clone
+FROM alpine/git:latest AS clone
 
 ARG dir=clone-folder
 ARG hostname=github.com
@@ -13,10 +12,6 @@ RUN git clone https://$hostname/$username/$project
 
 ###
 
-ARG image=maven
-ARG release=alpine
-
-#FROM $image:$release AS build
 FROM maven:alpine AS build
 
 ARG dir_old=clone-folder
@@ -29,10 +24,6 @@ RUN mvn install && mv target/$project-*.jar target/$project.jar
 
 ###
 
-ARG image=openjdk
-ARG release=jre-alpine
-
-#FROM $image:$release AS production
 FROM openjdk:jre-alpine AS production
 
 ARG dir_old=build-folder/target
