@@ -1,19 +1,49 @@
-FROM alpine/git:latest AS clone
+ARG image=alpine/git
+ARG release=latest
+ARG from=clone
+
+FROM $image:$release AS $from
+
+ARG dir=clone-folder
 ARG hostname=github.com
 ARG project=spring-petclinic
 ARG username=secobau
-WORKDIR /clone-folder
+
+WORKDIR /$dir
 RUN git clone https://$hostname/$username/$project
 
-FROM maven:alpine AS build
-WORKDIR /app2
-COPY --from=clone /app1/spring-petclinic . 
-RUN mvn install && mv target/spring-petclinic-*.jar target/spring-petclinic.jar
+###
 
-FROM openjdk:jre-alpine AS production
-WORKDIR /app3
-COPY --from=build /app2/target/spring-petclinic.jar .
+ARG image=maven
+ARG release=alpine
+ARG from=build
+
+FROM $image:$release AS $from
+
+ARG from_old=clone
+ARG dir_old=clone-folder
+ARG dir=build-folder
+ARG project=spring-petclinic
+
+WORKDIR /$dir
+COPY --from=$from_old /$dir_old/$project . 
+RUN mvn install && mv target/$project-*.jar target/$project.jar
+
+###
+
+ARG image=openjdk
+ARG release=jre-alpine
+ARG from=production
+
+FROM $image:$release AS $from
+
+ARG from_old=build
+ARG dir_old=build-folder/target
+ARG dir=production-folder
+ARG project=spring-petclinic.jar
+
+WORKDIR /$dir
+COPY --from=$from_old /$dir_old/$project . 
 ENTRYPOINT ["java","-jar"]
-CMD ["spring-petclinic.jar"]
-
-# COMMENT
+#CMD ["$project"]
+CMD $project
