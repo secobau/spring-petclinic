@@ -18,13 +18,12 @@ ARG release=alpine
 
 FROM $image:$release AS build
 
-ARG from_old=clone
 ARG dir_old=clone-folder
 ARG dir=build-folder
 ARG project=spring-petclinic
 
 WORKDIR /$dir
-COPY --from=$from_old /$dir_old/$project . 
+COPY --from=clone /$dir_old/$project . 
 RUN mvn install && mv target/$project-*.jar target/$project.jar
 
 ###
@@ -34,13 +33,12 @@ ARG release=jre-alpine
 
 FROM $image:$release AS production
 
-ARG from_old=build
 ARG dir_old=build-folder/target
 ARG dir=production-folder
 ARG project=spring-petclinic.jar
 
 WORKDIR /$dir
-COPY --from=$from_old /$dir_old/$project . 
+COPY --from=build /$dir_old/$project . 
 ENTRYPOINT ["java","-jar"]
 #CMD ["$project"]
 CMD $project
