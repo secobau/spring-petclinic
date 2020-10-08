@@ -1,5 +1,3 @@
-
-FROM $image:$release AS clone
 FROM alpine/git:latest AS clone
 
 ARG dir=clone-folder
