@@ -1,6 +1,9 @@
 FROM alpine/git:latest AS clone
-WORKDIR /app1
-RUN git clone https://github.com/secobau/spring-petclinic.git 
+ARG hostname=github.com
+ARG project=spring-petclinic
+ARG username=secobau
+WORKDIR /clone-folder
+RUN git clone https://$hostname/$username/$project
 
 FROM maven:alpine AS build
 WORKDIR /app2
