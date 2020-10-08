@@ -30,6 +30,4 @@ ARG project=spring-petclinic.jar
 
 WORKDIR /$dir
 COPY --from=build /$dir_old/$project . 
-ENTRYPOINT ["java","-jar"]
-#CMD ["$project"]
-CMD $project
+CMD java -jar $project
