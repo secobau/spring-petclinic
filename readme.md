@@ -1,4 +1,5 @@
 ![CI](https://github.com/secobau/spring-petclinic/workflows/CI/badge.svg)
+![CI-docker](https://github.com/secobau/spring-petclinic/workflows/CI-docker/badge.svg)
 ![CI-swarm](https://github.com/secobau/spring-petclinic/workflows/CI-swarm/badge.svg)
 ![CI-minikube](https://github.com/secobau/spring-petclinic/workflows/CI-minikube/badge.svg)
 
