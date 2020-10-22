@@ -1,7 +1,7 @@
 name: CI-minikube
 on: 
-  push:
-    branches: [main]
+  #push:
+   # branches: [main]
 jobs:
   minikube:
     env:
