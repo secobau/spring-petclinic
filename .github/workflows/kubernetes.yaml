@@ -1,7 +1,7 @@
 name: CI-kubernetes
 on: 
-  push:
-    branches: [main]
+  #push:
+   # branches: [main]
 jobs:
   kubernetes:
     env:
